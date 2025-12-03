@@ -1,248 +1,182 @@
-📄 Wallet Contract — Secure ETH Custody Smart Contract (Solidity + Foundry)
+# ⭐ Wallet Contract — Secure ETH Custody (Solidity + Foundry)
 
-A minimal, fully-tested Ethereum wallet contract that allows secure ETH deposits, owner-restricted withdrawals, and ownership transfers.
-Built entirely with Solidity 0.8.20 and tested using Foundry, this project demonstrates a clean on-chain architecture and strong testing discipline suitable for real-world Web3 development.
+A minimal, fully-tested Ethereum wallet smart contract for secure ETH deposits, owner-restricted withdrawals, and ownership transfers.  
+Built with **Solidity 0.8.20** and **Foundry**, this project demonstrates clean contract architecture and production-grade testing.
 
-Table of Contents
+---
 
-Overview
+## 📚 Table of Contents
+- [Overview](#-overview)
+- [Features](#-features)
+- [Contract Architecture](#-contract-architecture)
+- [Events](#-events)
+- [Access Control](#-access-control)
+- [Testing (Foundry)](#-testing-foundry)
+- [Running Tests](#️-running-tests)
+- [Project Structure](#-project-structure)
+- [Security Considerations](#-security-considerations)
+- [Future Improvements](#-future-improvements)
+- [License](#-license)
 
-Features
+---
 
-Contract Architecture
+## 🧩 Overview
 
-Events
+This wallet contract implements core Ethereum concepts:
 
-Access Control
+- ownership & access control  
+- ETH deposits & withdrawals  
+- event logging  
+- fallback & receive handlers  
+- comprehensive unit tests (Foundry)
 
-Testing (Foundry)
+It serves as a learning-friendly yet production-accurate example of on-chain value management, similar to real wallets, treasuries, escrow systems, and DeFi modules.
 
-Running Tests
+---
 
-Project Structure
+## ✨ Features
 
-Security Considerations
+- Deposit ETH using `deposit()` or direct transfers  
+- Track **last deposit** (amount, sender, timestamp)  
+- Owner-only withdrawals (restricted via modifier)  
+- Ownership transfer with `changeOwner()`  
+- Fully compatible with ETH transfers (`receive` & `fallback`)  
+- **Complete Foundry test suite** covering:
+  - deposits  
+  - withdrawals  
+  - reverts  
+  - permission checks  
+  - ownership changes  
 
-Future Improvements
+---
 
-License
+## 🏗️ Contract Architecture
 
-🧩 Overview
+### **Core Variables**
+- `owner` — address controlling the wallet  
+- Deposit tracking:
+  - `lastDepositAmount`
+  - `lastDepositTime`
+  - `lastDepositFrom`
 
-The Wallet Contract is a simple yet secure ETH custody smart contract designed to explore essential Ethereum concepts:
+### **Key Functions**
+- `deposit()` — external payable ETH deposit  
+- `withdraw(uint256 amount)` — owner-only withdrawal  
+- `changeOwner(address newOwner)` — assign new owner  
+- `getLastDeposit()` — deposit info  
+- `getTotalBalance()` — contract ETH balance  
 
-ownership control
+### **Fallback Handlers**
+- `receive()` — accepts plain ETH transfers  
+- `fallback()` — catches unknown calldata  
 
-deposits and withdrawals
+---
 
-access-restricted functions
+## 📡 Events
 
-event logging
+| Event | Description |
+|-------|-------------|
+| `Deposit(address from, uint256 amount, uint256 timestamp)` | Emitted when ETH is deposited |
+| `Withdrawal(address to, uint256 amount, uint256 timestamp)` | Emitted when owner withdraws ETH |
+| `OwnerChanged(address oldOwner, address newOwner, uint256 timestamp)` | Emitted when ownership changes |
 
-fallback and receive handlers
+---
 
-full unit-test coverage with Foundry
+## 🔐 Access Control
 
-This project serves as a strong foundation for understanding on-chain value management and permissioned flows, commonly used in real wallets, treasuries, escrow systems, and DeFi modules.
+The wallet uses a strict permission model:
 
-✨ Features
+- Only the **owner** can withdraw funds  
+- Only the **owner** can change ownership  
 
-Deposit ETH using a direct transaction or the deposit() function
+Enforced via:
 
-Track last deposit (amount, sender, timestamp)
+```solidity
+Unauthorized access attempts revert immediately.
 
-Owner-only withdrawals to prevent unauthorized transfers
+## 🧪 Testing (Foundry)
 
-Ownership transfer via changeOwner()
-
-Full ETH compatibility through receive() and fallback() functions
-
-Comprehensive test suite (9 unit tests) covering:
-
-deposits
-
-withdrawals
-
-reverts
-
-permissions
-
-ownership transfers
-
-🏗️ Contract Architecture
-
-The core components of the contract include:
-
-owner: the address controlling withdrawals and ownership changes
-
-deposit tracking:
-
-lastDepositAmount
-
-lastDepositTime
-
-lastDepositFrom
-
-modifiers:
-
-onlyOwner()
-
-_onlyOwner() (internal logic layer)
-
-ETH management:
-
-deposit() (external payable)
-
-withdraw() (owner-only)
-
-receive()
-
-fallback()
-
-The contract follows a clear structure used in professional audits:
-
-State Variables
-
-Events
-
-Constructor
-
-Core Functions
-
-View Functions
-
-Access Control
-
-Fallback Handlers
-
-📡 Events
-Event	Description
-Deposit(address from, uint256 amount, uint256 timestamp)	Emitted when ETH is deposited
-Withdrawal(address to, uint256 amount, uint256 timestamp)	Emitted when the owner withdraws
-OwnerChanged(address oldOwner, address newOwner, uint256 timestamp)	Emitted when ownership is transferred
-
-Events are essential for frontends, monitoring, and off-chain indexing systems like The Graph.
-
-🔐 Access Control
-
-This contract uses a simple but powerful permission model:
-
-Only the owner may withdraw funds
-
-Only the owner may change ownership
-
-Ownership is enforced via the onlyOwner modifier, which checks:
-
-require(msg.sender == owner, "Only owner can call this function");
-
-
-Unauthorized calls revert immediately.
-
-🧪 Testing (Foundry)
-
-The project includes a full Foundry test suite covering:
+This project includes a 9-test Foundry suite validating:
 
 correct owner initialization
 
-deposit behavior
+deposit mechanics
 
 last deposit tracking
 
-successful withdrawals
-
-unauthorized withdrawals (reverts)
+owner-only withdrawals
 
 insufficient balance reverts
 
-ownership transfers
+unauthorized access reverts
 
-unauthorized owner changes
+ownership transfers
 
 new owner permissions
 
-Example test cases include:
+Foundry cheatcodes used:
 
-testing balance changes before/after withdrawing
+vm.deal() — fund accounts
 
-simulating external users with vm.prank()
+vm.prank() — simulate msg.sender
 
-funding accounts with vm.deal()
+vm.expectRevert() — check revert messages
 
-verifying reverts with specific messages (vm.expectRevert())
+assertEq() — validate state/balances
 
-This mirrors real smart contract auditing and production-grade testing practices.
+## ▶️ Running Tests
 
-▶️ Running Tests
-
-Install Foundry (if you haven’t already):
-
+1. Install Foundry
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
 
-
-Build the project:
-
+2. Build
 forge build
 
-
-Run the full test suite:
-
+3. Run tests
 forge test -vv
 
+## 📁 Project Structure
 
-Where:
-
--v shows logs
-
--vv shows stack traces and detailed gas reports
-
-📁 Project Structure
 wallet-contract/
 │
 ├── src/
-│   └── Wallet.sol         # Main smart contract
+│   └── Wallet.sol          # Main smart contract
 │
 ├── test/
-│   └── Wallet.t.sol       # Full Foundry test suite
+│   └── Wallet.t.sol        # Foundry test suite
 │
 ├── foundry.toml
 └── README.md
 
-🔒 Security Considerations
+## 🔒 Security Considerations
 
-Although simple, the contract follows best practices:
+No reentrancy risk (transfer() gas stipend = 2300)
 
-No reentrancy risk (uses transfer(), which provides 2300 gas stipend)
+Only owner may withdraw funds
 
-Only the owner can withdraw funds
+Ownership cannot be set to zero address
 
-Ownership cannot be assigned to the zero address
+Minimal state surface
 
-Direct ETH transfers are supported via receive() and fallback()
+Assumes trusted owner (centralized wallet model)
 
-State changes are minimal and predictable
+## 🚀 Future Improvements
 
-Threat model:
-This contract assumes a trusted owner (centralized wallet model).
+Multi-signature support
 
-🚀 Future Improvements
+ERC20 support
 
-Potential enhancements:
+Pausable withdrawals
 
-Multi-signature ownership (multi-owner wallets)
+Emergency admin features
 
-ERC20 token support
+EIP-712 meta-transactions
 
-Add pausable withdrawals
+Withdrawal recipient parameter
 
-Add emergency withdrawal or rescue functionality
+Full deposit history tracking
 
-Implement EIP-712 typed structured data for meta-transactions
+## 📜 License
 
-Make withdrawals configurable (recipient argument)
-
-Add more advanced tracking (total deposits, deposit history array, etc.)
-
-📜 License
-
-This project is released under the MIT License, allowing full reuse and modification.
+MIT License — free to use, modify, and distribute.
