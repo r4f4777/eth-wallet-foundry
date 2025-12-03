@@ -138,16 +138,9 @@ forge test -vv
 
 ## 📁 Project Structure
 
-wallet-contract/
-│
-├── src/
-│   └── Wallet.sol          # Main smart contract
-│
-├── test/
-│   └── Wallet.t.sol        # Foundry test suite
-│
-├── foundry.toml
-└── README.md
+Main smart contract path: wallet-contract/src/Wallet.sol
+Test smart contract path: wallet-contract/test/Wallet.t.sol
+
 
 ## 🔒 Security Considerations
 
