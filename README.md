@@ -90,8 +90,8 @@ The wallet uses a strict permission model:
 - Only the **owner** can change ownership  
 
 Enforced via:
+require(msg.sender == owner, "Only owner can call this function");
 
-```solidity
 Unauthorized access attempts revert immediately.
 
 ## 🧪 Testing (Foundry)
