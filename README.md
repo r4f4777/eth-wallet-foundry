@@ -98,23 +98,16 @@ Unauthorized access attempts revert immediately.
 
 This project includes a 9-test Foundry suite validating:
 
-correct owner initialization
+- correct owner initialization
+- deposit mechanics
+- last deposit tracking
+- owner-only withdrawals
+- insufficient balance reverts
+- unauthorized access reverts
+- ownership transfers
+- new owner permissions
 
-deposit mechanics
-
-last deposit tracking
-
-owner-only withdrawals
-
-insufficient balance reverts
-
-unauthorized access reverts
-
-ownership transfers
-
-new owner permissions
-
-Foundry cheatcodes used:
+**Foundry cheatcodes used:**
 
 vm.deal() — fund accounts
 
