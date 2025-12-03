@@ -1,11 +1,11 @@
-# ⭐ Wallet Contract — Secure ETH Custody (Solidity + Foundry)
+#  Wallet Contract — Secure ETH Custody (Solidity + Foundry)
 
 A minimal, fully-tested Ethereum wallet smart contract for secure ETH deposits, owner-restricted withdrawals, and ownership transfers.  
 Built with **Solidity 0.8.20** and **Foundry**, this project demonstrates clean contract architecture and production-grade testing.
 
 ---
 
-## 📚 Table of Contents
+##  Table of Contents
 - [Overview](#-overview)
 - [Features](#-features)
 - [Contract Architecture](#-contract-architecture)
@@ -20,7 +20,7 @@ Built with **Solidity 0.8.20** and **Foundry**, this project demonstrates clean 
 
 ---
 
-## 🧩 Overview
+##  Overview
 
 This wallet contract implements core Ethereum concepts:
 
@@ -34,7 +34,7 @@ It serves as a learning-friendly yet production-accurate example of on-chain val
 
 ---
 
-## ✨ Features
+##  Features
 
 - Deposit ETH using `deposit()` or direct transfers  
 - Track **last deposit** (amount, sender, timestamp)  
@@ -50,7 +50,7 @@ It serves as a learning-friendly yet production-accurate example of on-chain val
 
 ---
 
-## 🏗️ Contract Architecture
+##  Contract Architecture
 
 ### **Core Variables**
 - `owner` — address controlling the wallet  
@@ -72,7 +72,7 @@ It serves as a learning-friendly yet production-accurate example of on-chain val
 
 ---
 
-## 📡 Events
+##  Events
 
 | Event | Description |
 |-------|-------------|
@@ -82,7 +82,7 @@ It serves as a learning-friendly yet production-accurate example of on-chain val
 
 ---
 
-## 🔐 Access Control
+##  Access Control
 
 The wallet uses a strict permission model:
 
@@ -94,7 +94,7 @@ require(msg.sender == owner, "Only owner can call this function");
 
 Unauthorized access attempts revert immediately.
 
-## 🧪 Testing (Foundry)
+##  Testing (Foundry)
 
 This project includes a 9-test Foundry suite validating:
 
@@ -124,7 +124,7 @@ vm.expectRevert() — check revert messages
 
 assertEq() — validate state/balances
 
-## ▶️ Running Tests
+##  Running Tests
 
 1. Install Foundry
 curl -L https://foundry.paradigm.xyz | bash
@@ -136,13 +136,13 @@ forge build
 3. Run tests
 forge test -vv
 
-## 📁 Project Structure
+##  Project Structure
 
 Main smart contract path: wallet-contract/src/Wallet.sol
 Test smart contract path: wallet-contract/test/Wallet.t.sol
 
 
-## 🔒 Security Considerations
+##  Security Considerations
 
 No reentrancy risk (transfer() gas stipend = 2300)
 
@@ -154,7 +154,7 @@ Minimal state surface
 
 Assumes trusted owner (centralized wallet model)
 
-## 🚀 Future Improvements
+##  Future Improvements
 
 Multi-signature support
 
@@ -170,6 +170,6 @@ Withdrawal recipient parameter
 
 Full deposit history tracking
 
-## 📜 License
+##  License
 
 MIT License — free to use, modify, and distribute.
